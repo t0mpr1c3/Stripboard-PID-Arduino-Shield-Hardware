@@ -1,37 +1,60 @@
-<div>
-A stripped-down PID controller purpose designed for a DIY build, suitable for governing temperatures up to 125°C. Just bring your Arduino!</div>
+<html>
+<body>
+This easy-to-make shield converts your Arduino into a full-featured PID controller.<br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="http://1.bp.blogspot.com/-1FCQ-glOLsA/UjYC3Vph4nI/AAAAAAAABgY/j6worPwPzuk/s1600/tayda-arduino-pid-alt.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="304" src="http://1.bp.blogspot.com/-1FCQ-glOLsA/UjYC3Vph4nI/AAAAAAAABgY/j6worPwPzuk/s400/tayda-arduino-pid-alt.png" width="400" /></a></div>
+<a href="http://3.bp.blogspot.com/-fytXHJe-DIo/Unh6jbssDwI/AAAAAAAABvk/wHjIQm_JfAI/s1600/stripboard-pid-resized.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://3.bp.blogspot.com/-fytXHJe-DIo/Unh6jbssDwI/AAAAAAAABvk/wHjIQm_JfAI/s400/stripboard-pid-resized.jpg" /></a></div>
+<br />
 <br />
 <!--more--><br />
 <h3>
 DIY PID Controller</h3>
 <br />
 <div>
-A PID controller is <a href="http://www.ospid.com/blog/what-is-pid-control/">like a kind of fancy thermostat</a>, but can be used to control pretty much any kind of process, not just heating and cooling. This project was inspired by the&nbsp;<a href="http://www.ospid.com/">osPID</a> (open source PID) and is indebted to that pioneering device in every possible way.</div>
+This is the first of a series of posts about the Arduino PID controller shield:
+<br />
+<ol>
+<li><a href="http://smokedprojects.blogspot.com/2013/11/stripboard-pid-arduino-shield-hardware.html">How to build the stripboard PID shield.</a></li>
+<li><a href="http://smokedprojects.blogspot.com/2013/11/stripboard-pid-arduino-shield-firmware.html">Using the shield as a standalone PID controller.</a></li>
+<li><a href="http://smokedprojects.blogspot.com/2013/09/stripboard-pid-arduino-shield-software.html">Operating the PID controller remotely using the graphical front end.</a></li>
+<li>Interfacing the PID shield with a K-type thermocouple.</li>
+</ol>
+</div>
 <br />
 <div>
-The goal was to design a PID controller that could be built from individual components with minimal skill and know-how. With this in mind, the hardware design attempted to recreate as much as possible of the functionality of osPID on a hand-soldered prototype board using through-hole components. The firmware is correspondingly tweaked to take account of the different temperature sensors and pinouts, and the front end software is borrowed directly from the osPID.</div>
+A PID controller is <a href="http://www.ospid.com/blog/what-is-pid-control/">like a kind of fancy thermostat</a>, but can be used to control pretty much any kind of process, not just heating and cooling. This project was inspired by the&nbsp;<a href="http://www.ospid.com/">osPID</a> (open source PID) and its design is greatly indebted to that pioneering device.</div>
 <br />
 <div>
-Although intended as a hobby project, it is definitely more than just a toy. With the addition of an <a href="http://smokedprojects.blogspot.com/2013/09/solid-state-relay-module.html">SSR module</a> and suitable cookware, the stripboard PID shield could be used directly in applications such as <i>sous vide</i> food preparation, brewing, and making the best espresso this side of <a href="http://goo.gl/maps/rENX8">Milan</a>.</div>
+The goal of this project was to make a PID controller from scratch with minimal skill and know-how. It was an easy call to design the controller as an&nbsp;<a href="http://amzn.to/12aYA6Z">Arduino</a>&nbsp;shield. This would make the project accessible to hobbyists and enable reuse of the tried-and-tested <a href="http://www.ospid.com/blog/">osPID</a> firmware and GUI. The shield had to be easy to build using minimal tools, with components that were easy to order. Fortunately, it proved possible to recreate most of the functionality of the osPID on hand-soldered prototype board using through-hole components.</div>
+<br />
+<div>
+Although intended as a DIY project this device is very capable. With the addition of an <a href="http://smokedprojects.blogspot.com/2013/09/solid-state-relay-module.html">SSR module</a> and suitable cookware, the stripboard PID shield could be used directly in applications such as <i>sous vide</i> food preparation, brewing, and making the best espresso this side of <a href="http://goo.gl/maps/rENX8">Milan</a>.</div>
 <br />
 <br />
 <h3>
 Hardware Design</h3>
 <br />
 <div>
-This post is the first of a series of three, and describes how to build the PID shield itself. Future posts will give details on the Arduino firmware required to operate the PID controller, and how to install and use the software front end.</div>
+The original&nbsp;<a href="http://www.ospid.com/blog/resources/hardware/">osPID hardware</a>&nbsp;was adapted to fit the constraints I had chosen. There wasn't space for an output relay, the op-amp buffer and low pass filter for the thermistor were omitted, and the <a href="http://datasheets.maximintegrated.com/en/ds/MAX31855.pdf">thermocouple interface chip</a> was not available as a through hole component. On plus side, it was easy to add the ability to use 1-wire temperature sensors like my favorite <a href="http://datasheets.maximintegrated.com/en/ds/DS18B20.pdf">DS18B20</a>. A 16x2 LCD module was preferred to the osPID's 8x2 on the basis that it used the standard connector for HD44780 equivalent displays.</div>
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/-n1cP-eKzRZs/Uk5GRHANSYI/AAAAAAAABrs/oT-A9etg1Mo/s1600/stripboard-PID-Arduino-shield-schematic.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="216" src="http://1.bp.blogspot.com/-n1cP-eKzRZs/Uk5GRHANSYI/AAAAAAAABrs/oT-A9etg1Mo/s400/stripboard-PID-Arduino-shield-schematic.png" width="400" /></a></div>
+<br />
 <br />
 <div>
-The stripboard layout was designed using the freeware version of <a href="http://www.cadsoftusa.com/download-eagle/freeware/">Eagle</a>, following this <a href="http://home.roadrunner.com/~perks/micros/Projects/Stripboard_EAGLE/Stripboard_EAGLE.htm">useful guide</a>. It would have been nice to spaced things out a little more, but I chose to constrain the board to a <a href="http://www.taydaelectronics.com/hardware/prototyping-boards/small-stripboard-94x53mm-copper.html">standard size</a> so that the the shield would not dwarf the Arduino underneath.</div>
+The stripboard layout&nbsp;was created&nbsp;using the freeware version of&nbsp;<a href="http://www.cadsoftusa.com/download-eagle/freeware/">Eagle</a>,&nbsp;following this <a href="http://home.roadrunner.com/~perks/micros/Projects/Stripboard_EAGLE/Stripboard_EAGLE.htm">useful guide</a>. It would have been nice to spaced things out a little more, but I chose to constrain the board to a <a href="http://www.taydaelectronics.com/hardware/prototyping-boards/small-stripboard-94x53mm-copper.html">standard size</a> so that the the shield would not dwarf the Arduino underneath.</div>
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/-k_njPZJXZTY/Uk5GXApCRvI/AAAAAAAABr0/EPmrozWUsME/s1600/stripboard-PID-Arduino-shield-board.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://1.bp.blogspot.com/-k_njPZJXZTY/Uk5GXApCRvI/AAAAAAAABr0/EPmrozWUsME/s400/stripboard-PID-Arduino-shield-board.png" /></a></div>
+<br />
 <br />
 <div>
-To keep things simple, all the materials (apart from the <a href="http://amzn.to/12aYA6Z">Arduino</a> itself) can all be sourced from <a href="http://www.taydaelectronics.com/">Tayda</a>. I have never been let down by the quality of Tayda components, despite their low prices — and their shipping charges are low, too.</div>
+This project implements different temperature sensors: the digital <a href="http://datasheets.maximintegrated.com/en/ds/DS18B20.pdf">DS18B20</a>, and an&nbsp;analogue&nbsp;<a href="http://www.taydaelectronics.com/datasheets/A-409.pdf">thermistor</a>. These options limit the maximum temperature to&nbsp;125°C or so,&nbsp;but&nbsp;don't despair&nbsp;if you need to measure&nbsp;higher temperatures. It's easy to interface a K-type thermocouple using a <a href="https://github.com/t0mpr1c3/Adafruit-MAX31855-breakout-board">MAX31855 breakout board</a>.</div>
 <br />
 <div>
-Two possibilities are implemented for the temperature sensor: an analogue <a href="http://www.taydaelectronics.com/datasheets/A-409.pdf">thermistor</a>, or the digital <a href="http://datasheets.maximintegrated.com/en/ds/DS18B20.pdf">DS18B20</a>. These options limit the maximum temperature to&nbsp;125°C or so.&nbsp;The original osPID uses a&nbsp;<a href="http://www.maximintegrated.com/datasheet/index.mvp/id/7273">MAX31855</a>&nbsp;to interface with a&nbsp;thermocouple, allowing much higher temperatures, but this is outside the scope of the current project.</div>
+To keep things simple, all the materials (apart from the <a href="http://amzn.to/12aYA6Z">Arduino</a> itself) can all be sourced from <a href="http://www.taydaelectronics.com/">Tayda</a>. I have never been let down by the quality of Tayda components, despite their low prices — and their shipping charges are very reasonable, too.</div>
+<br />
+I tested the PID shield on an Arduino Uno R3. It should work on any board with the standard dimensions, although low voltage models like the Arduino Due will need a 3.3V display. The firmware requires at least 32 kB of flash memory.<br />
 <br />
 <br />
 <h3>
@@ -39,43 +62,46 @@ Build</h3>
 <br />
 <div>
 <ol>
-<li>Orient the stripboard with one long side to the front and the copper tracks on the top. Cut tracks in the positions shown on the diagram below using a 1/8" drill bit or&nbsp;<a href="http://amzn.to/19qokCr">craft knife</a>. It's a good idea to check with the continuity tester setting on your <a href="http://amzn.to/11mu866">multimeter</a>.</li>
+<li>Clean the stripboard with isopropyl alcohol to remove grease and tarnish. Orient the board with one long side to the front and the copper tracks on the top. Cut tracks in the positions shown on the diagram below using a 1/8" drill bit or&nbsp;<a href="http://amzn.to/19qokCr">craft knife</a>. It's a good idea to check with the continuity tester setting on your <a href="http://amzn.to/11mu866">multimeter</a>. Check the locations carefully — I made a couple of extra holes by mistake which I had to correct later on by bridging the holes with the cut-off leg from a LED.</li>
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="http://1.bp.blogspot.com/-iLwORvh3Ons/UjYVgzTk0zI/AAAAAAAABh8/-hwNJvMC2I0/s1600/pid-xl1.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="290" src="http://1.bp.blogspot.com/-iLwORvh3Ons/UjYVgzTk0zI/AAAAAAAABh8/-hwNJvMC2I0/s400/pid-xl1.png" width="400" /></a></div>
+<a href="http://1.bp.blogspot.com/-pViEEN2rNNI/Uk5Gdxz8ugI/AAAAAAAABr8/O7X8yibokDo/s1600/pid-xl1.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://1.bp.blogspot.com/-pViEEN2rNNI/Uk5Gdxz8ugI/AAAAAAAABr8/O7X8yibokDo/s400/pid-xl1.png" /></a></div>
 <br />
 <br />
-<li>Now flip the stripboard over the long axis. The short edges on the left and right should stay on the same side, but what was the front edge should now be at the back and the copper tracks should now be on the bottom. Solder in the male and female pin headers and SIP sockets as shown below. Placing these headers first makes it slightly easier to get the other components and wire jumpers in the right place. Soldering is much easier with a&nbsp;<a href="http://amzn.to/12nQX9m">temperature controlled soldering station</a>. For safety reasons, &nbsp;I recommend using&nbsp;<a href="http://amzn.to/15v1d6q">lead free solder</a>.</li>
-<br />
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://2.bp.blogspot.com/-FjUvqAg6a5I/UjYJstV3c3I/AAAAAAAABg8/RraW2ab7RYQ/s1600/pid-xl3.png" imageanchor="1"><img border="0" src="http://2.bp.blogspot.com/-FjUvqAg6a5I/UjYJstV3c3I/AAAAAAAABg8/RraW2ab7RYQ/s400/pid-xl3.png" /></a>
-</div>
-<br />
-<br />
-<li>Cut wire jumpers to size and solder in place. Solid core wire is preferable&nbsp;for stripboard because the corners can be bent nicely so it lies flat:&nbsp;<a href="http://amzn.to/193l6yT">flat nose jewelry pliers</a>&nbsp;are useful for this.&nbsp;It is helpful to colour code the wires. I suggest using black wire for anything connecting the GND, red wire for connecting to 5V, and white wire for everything else. Use&nbsp;<a href="http://amzn.to/19zMcQG">flush cutters</a>&nbsp;to trim the wires after soldering.</li>
+<li>Now flip the stripboard over the long axis. The short edges on the left and right should stay on the same side, but what was the front edge should now be at the back and the copper tracks should now be on the bottom. Prepare the male headers by cutting lengths from the strip: one each with 8, 6, and 4 pins. For each male header, press down using needle-nose pliers to slide to the pins to the end of the plastic retainer. Put the headers in the positions marked "M" below, with the plastic part flush with the top of the board, and solder the pins to the copper strips on the reverse. Then cut the female pin headers, two with 6 holes and two with 3 holes, and solder them in the positions marked "F" below. A good trick for lining up the female headers straight is to fix them to a male header strip. Make doubly sure the headers are in the right place. Once all the pins are soldered they are devilishly difficult to remove.</li>
+<br /><div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/-sl1QX6xbmNQ/UnkjVSEbKUI/AAAAAAAABwQ/bNW-3uOQNCQ/s1600/male-headers-resized.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://1.bp.blogspot.com/-sl1QX6xbmNQ/UnkjVSEbKUI/AAAAAAAABwQ/bNW-3uOQNCQ/s320/male-headers-resized.jpg" /></a></div>
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="http://1.bp.blogspot.com/-BH3g90dyREQ/UjYR4txWhXI/AAAAAAAABhQ/v4-p7z29LIg/s1600/pid-xl4.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="312" src="http://1.bp.blogspot.com/-BH3g90dyREQ/UjYR4txWhXI/AAAAAAAABhQ/v4-p7z29LIg/s400/pid-xl4.png" width="400" /></a></div>
+<a href="http://4.bp.blogspot.com/--vwaAFZkPRI/Uk5Gj9l8cJI/AAAAAAAABsE/-szg3qZ3hPc/s1600/pid-xl2.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://4.bp.blogspot.com/--vwaAFZkPRI/Uk5Gj9l8cJI/AAAAAAAABsE/-szg3qZ3hPc/s400/pid-xl2.png" /></a></div>
 <br />
 <br />
-<li>Solder the axial resistors in place. This will be easy after the practice you have had soldering the jumpers!</li>
-<br />
-<div class="separator" style="clear: both; text-align: center;">
-<a href="http://1.bp.blogspot.com/-Sp6ZRXpon6k/UjYSeQrrcII/AAAAAAAABhg/3zP59yAilm8/s1600/pid-xl5.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="363" src="http://1.bp.blogspot.com/-Sp6ZRXpon6k/UjYSeQrrcII/AAAAAAAABhg/3zP59yAilm8/s400/pid-xl5.png" width="400" /></a></div>
-<br />
-<br />
-<li>Solder in the larger components. Be sure to orient the symmetrical components correctly. Make sure the positive and negative terminals of the LEDs and buzzer are in the correct holes, and that the transistor is facing the right way. The terminal blocks should have the wire clamps facing outward.</li>
+<li>Cut wire jumpers to size and solder in place. Solid core wire is preferable&nbsp;for stripboard because it is easier to poke through the holes, and the corners can be bent nicely so it lies flat:&nbsp;<a href="http://amzn.to/193l6yT">flat nose jewelry pliers</a>&nbsp;are useful for this.&nbsp;It is helpful to colour code the wires. I suggest using black wire for anything connecting the GND, red wire for connecting to 5V, and yellow or white wire for everything else. Use&nbsp;<a href="http://amzn.to/19zMcQG">flush cutters</a>&nbsp;to trim the wires after soldering.</li>
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="http://2.bp.blogspot.com/-Gx6OSGMIzVk/UjYijUMsONI/AAAAAAAABic/Bh9osCBBIP0/s1600/pid-xl6.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="372" src="http://2.bp.blogspot.com/-Gx6OSGMIzVk/UjYijUMsONI/AAAAAAAABic/Bh9osCBBIP0/s400/pid-xl6.png" width="400" /></a></div>
+<a href="http://1.bp.blogspot.com/-_O7mOdL-04I/Uk5GpREm0-I/AAAAAAAABsM/tlXbKCY4n7I/s1600/pid-xl3.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://1.bp.blogspot.com/-_O7mOdL-04I/Uk5GpREm0-I/AAAAAAAABsM/tlXbKCY4n7I/s400/pid-xl3.png" /></a></div>
+<br />
+<br />
+<li>Solder the axial resistors in place. This should be easy after the practice you have had soldering the jumpers! The resistor values are:&nbsp;R1, R2, R4, R7: 1&nbsp;KΩ.&nbsp;R3: 10&nbsp;KΩ.&nbsp;R5, R8: 330&nbsp;Ω.&nbsp;R6: 470&nbsp;Ω.</li>
+<br />
 <div class="separator" style="clear: both; text-align: center;">
-<br /></div>
+<a href="http://1.bp.blogspot.com/-xEA1iSIdLeU/Uk5Gt_NrisI/AAAAAAAABsU/-5he1yuB9Pc/s1600/pid-xl4.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://1.bp.blogspot.com/-xEA1iSIdLeU/Uk5Gt_NrisI/AAAAAAAABsU/-5he1yuB9Pc/s400/pid-xl4.png" /></a></div>
 <br />
 <br />
-<li>Now make the temperature probes. Solder red and black stranded wires to the&nbsp;<a href="http://www.taydaelectronics.com/datasheets/A-409.pdf">thermistor</a>&nbsp;pins. (These can be twisted if desired to reduce noise on the input). Solder red, black, and yellow stranded wires to the&nbsp;<a href="http://datasheets.maximintegrated.com/en/ds/DS18B20.pdf">DS18B20</a>&nbsp;VDD, GND, and DATA pins, respectively.&nbsp;Straddle the SIP sockets with the legs of a 10&nbsp;KΩ&nbsp;1% resistor. Insert the chosen temperature probe into the appropriate terminals of the 3-position input terminal block. The thermistor goes between VDD and DATA, forming a voltage divider with the 10&nbsp;KΩ&nbsp;1% resistor in the SIP sockets. Alternatively, connect all 3 wires from the DS18B20 to the appropriate terminal, with the&nbsp;10&nbsp;KΩ&nbsp;1% resistor acting as a pull-up on the DATA line. If the temperature probe is going to get immersed in water, it is probably advisable to put it in some kind of <a href="http://www.brewershardware.com/Thermowells/">thermowell</a>.</li>
+<li>Solder in the larger components. Be sure to orient the symmetrical components correctly. Make sure the positive and negative terminals of the LEDs and buzzer are in the correct holes, and that the transistor is facing the right way. The terminal blocks should have the screw clamps facing outward.</li>
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://1.bp.blogspot.com/-4P9a1Yvr9AM/Uk5GxpJ3mzI/AAAAAAAABsc/AHbEFfp03NE/s1600/pid-xl5.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://1.bp.blogspot.com/-4P9a1Yvr9AM/Uk5GxpJ3mzI/AAAAAAAABsc/AHbEFfp03NE/s400/pid-xl5.png" /></a></div>
 <br />
 <br />
-<li>Lastly, label the switches and fit the LCD display into the female headers. The PID shield is complete. Just add your Arduino!</li>
+<li>Now make the temperature probes. Solder red and black stranded wires to the&nbsp;<a href="http://www.taydaelectronics.com/datasheets/A-409.pdf">thermistor</a>&nbsp;pins. (These can be twisted if desired to reduce noise on the input). Solder red, black, and yellow stranded wires to the&nbsp;<a href="http://datasheets.maximintegrated.com/en/ds/DS18B20.pdf">DS18B20</a>&nbsp;VDD, GND, and DATA pins, respectively. Insert the chosen temperature probe into the appropriate terminals of the 3-position input terminal block. The thermistor goes between VDD and DATA, forming a voltage divider with a 10&nbsp;KΩ&nbsp;1% resistor whose legs are clamped in DATA and GND. (Select the reference resistor that measures 10&nbsp;KΩ&nbsp; most exactly on your multimeter.) Alternatively, connect all 3 wires from the DS18B20 to the appropriate terminals, and a 4.7 KΩ &nbsp;resistor between DATA and VDD acting as a pull-up on the DATA line. It's a good idea to insulate the legs of the probe with heat shrink or electrical tape. And if the temperature probe is going to go somewhere wet, it is probably advisable to put it in some kind of <a href="http://www.brewershardware.com/Thermowells/">thermowell</a>.&nbsp;For a visual indication of the output, we can clamp the legs of a LED in the terminals of the 2-way output block. </li>
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://2.bp.blogspot.com/-T4vNKrhxJy8/Unh6GB1nh5I/AAAAAAAABvU/ZqTvNnEe6t4/s1600/ds18b20+temperature-probe-resized.jpg" imageanchor="1" style="margin-left: 1em;"><img border="0" height="150" src="http://2.bp.blogspot.com/-T4vNKrhxJy8/Unh6GB1nh5I/AAAAAAAABvU/ZqTvNnEe6t4/s200/ds18b20+temperature-probe-resized.jpg" width="200" /></a>
+<a href="http://1.bp.blogspot.com/-jeO_ywGKZi0/Unh6IUQ6OHI/AAAAAAAABvc/37_F7Jf4izA/s1600/sensor-probe-resized.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="150" src="http://1.bp.blogspot.com/-jeO_ywGKZi0/Unh6IUQ6OHI/AAAAAAAABvc/37_F7Jf4izA/s200/sensor-probe-resized.jpg" width="200" /></a></div>
+<br />
+<br />
+<li>Check the board over one last time, then clean off any residual flux. Label the switches. Fit the LCD display into the female headers. Stuff a decoupling capacitor between AREF and GND on the Arduino&nbsp;—&nbsp;something around 0.1 μF helps reduce noise on the ADC, which is used to measure the resistance of the thermistor, as well as reading the pushbuttons. Finally, mount the shield to your Arduino. The hardware is complete. The next step is to <a href="http://smokedprojects.blogspot.com/2013/09/stripboard-pid-arduino-shield-firmware.html">upload the firmware to the Arduino</a> and test out your new PID controller.</li>
 </ol>
 </div>
 <br />
@@ -84,33 +110,36 @@ Build</h3>
 Materials</h3>
 <br />
 <div>
+For ease of ordering, all these components are sourced from <a href="http://www.taydaelectronics.com/">Tayda</a>. 
+<!-- To make sure you get the exact components that are specified, please order through the clickable links on the Taydakits page. -->
+<br />
 <ul>
 <li><a href="http://www.taydaelectronics.com/hardware/prototyping-boards/small-stripboard-94x53mm-copper.html">93x53mm stripboard (copper)</a></li>
-<li>1'&nbsp;<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-black-hook-up-wire-1ft-30cm-solid.html">black 22 AWG solid hook-up wire</a></li>
-<li>1'&nbsp;<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-red-hook-up-wire-1ft-30cm-solid.html">red 22 AWG solid hook-up wire</a></li>
-<li>1'&nbsp;<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-white-hook-up-wire-1ft-30cm-solid.html">white 22 AWG solid hook-up wire</a></li>
-<li>10'<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-red-hook-up-wire-1ft-30cm-stranded.html"> red 22 AWG stranded hook-up wire</a></li>
-<li>10'&nbsp;<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-black-hook-up-wire-1ft-30cm-stranded.html">black 22 AWG stranded hook-up wire</a></li>
-<li>5'&nbsp;<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-yellow-hook-up-wire-1ft-30cm-stranded.html">yellow 22 AWG stranded hook-up wire</a></li>
+<li><a href="http://www.taydaelectronics.com/lcd-displays/lcd-display-16-x-2-blue-character-with-backlight.html">16x2 character LCD display with blue backlight</a></li>
+<li><a href="http://www.taydaelectronics.com/buzzers/piezo-electronic-tone-buzzer-alarm-1-5-28v-pcb.html">PCB mount piezoelectric buzzer</a></li>
+<li>4 x&nbsp;<a href="http://www.taydaelectronics.com/electromechanical/switches-key-pad/tact-switch/tact-switch-6x6mm-9-5mm-through-hole-spst-no.html">tactile switch</a></li>
+<li><a href="http://www.taydaelectronics.com/ic-integrated-circuits/temperature-sensors/ds18b20-1-wire-digital-temperature-sensor-ic-dallas.html">DS18B20 digital temperature sensor</a></li>
+<li><a href="http://www.taydaelectronics.com/thermistors/10k-ohm-ntc-thermistor-5mm.html">10&nbsp;KΩ NTC thermistor</a></li>
+<li><a href="http://www.taydaelectronics.com/connectors-sockets/terminal-blocks/pcb-mount/dg301-screw-terminal-block-3-positions-5mm.html">screw terminal block 5mm pitch, 3 positions</a></li>
+<li><a href="http://www.taydaelectronics.com/connectors-sockets/terminal-blocks/pcb-mount/dg301-screw-terminal-block-2-positions-5mm.html">screw terminal block 5mm pitch, 2 positions</a></li>
 <li><a href="http://www.taydaelectronics.com/connectors-sockets/pin-headers/40-pin-2-54-mm-single-row-pin-header-strip.html">0.1" pitch male pin header strip</a></li>
 <li><a href="http://www.taydaelectronics.com/connectors-sockets/pin-headers/40-pin-2-54-mm-single-row-female-pin-header.html">0.1" pitch female pin header strip</a></li>
-<li><a href="http://www.taydaelectronics.com/connectors-sockets/sockets/sip-sockets/30-pin-dip-sip-ic-sockets-adaptor-solder-type.html">0.1" pitch SIP socket strip</a></li>
+<li><a href="http://www.taydaelectronics.com/t-transistors/2n-series/2n3904-npn-general-propose-transistor.html">2N3904 transistor</a></li>
+<li><a href="http://www.taydaelectronics.com/potentiometer-variable-resistors/trimmers/6mm-top-adjustment/10k-ohm-trimpot-variable-resistor-6mm.html">10&nbsp;KΩ trimpot</a></li>
+<li>2x&nbsp;<a href="http://www.taydaelectronics.com/leds/round-leds/5mm-leds/red/led-5mm-red.html">5mm red LED</a></li>
+<li><a href="http://www.taydaelectronics.com/leds/round-leds/5mm-leds/led-5mm-yellow.html">5mm yellow LED</a></li>
+<li>10 x&nbsp;<a href="http://www.taydaelectronics.com/resistors/1-4w-metal-film-resistors/10-x-resistor-10k-ohm-1-4w-1-metal-film-pkg-of-10.html">10&nbsp;KΩ resistor 1%</a></li>
 <li>10 x&nbsp;<a href="http://www.taydaelectronics.com/resistors/1-4w-carbon-film-resistors/10-x-resistor-330-ohm-1-4w-5-carbon-film-pkg-of-10.html">330&nbsp;Ω resistor 5%</a></li>
 <li>10 x&nbsp;<a href="http://www.taydaelectronics.com/resistors/1-4w-carbon-film-resistors/10-x-resistor-470-ohm-1-4w-5-carbon-film-pkg-of-10.html">470&nbsp;Ω resistor 5%</a></li>
 <li>10 x&nbsp;<a href="http://www.taydaelectronics.com/resistors/1-4w-carbon-film-resistors/10-x-resistor-1k-ohm-1-4w-5-carbon-film-pkg-of-10.html">1&nbsp;KΩ resistor 5%</a></li>
-<li>10 x&nbsp;<a href="http://www.taydaelectronics.com/resistors/1-4w-metal-film-resistors/10-x-resistor-10k-ohm-1-4w-1-metal-film-pkg-of-10.html">10&nbsp;KΩ resistor 1%</a></li>
-<li>4 x&nbsp;<a href="http://www.taydaelectronics.com/electromechanical/switches-key-pad/tact-switch/tact-switch-6x6mm-9-5mm-through-hole-spst-no.html">tactile switch</a></li>
-<li><a href="http://www.taydaelectronics.com/leds/round-leds/5mm-leds/red/led-5mm-red.html">5mm red LED</a></li>
-<li><a href="http://www.taydaelectronics.com/leds/round-leds/5mm-leds/led-5mm-yellow.html">5mm yellow LED</a></li>
-<li><a href="http://www.taydaelectronics.com/t-transistors/2n-series/2n3904-npn-general-propose-transistor.html">2N3904 transistor</a></li>
-<li>
-<a href="http://www.taydaelectronics.com/buzzers/piezo-electronic-tone-buzzer-alarm-1-5-28v-pcb.html">PCB mount piezoelectric buzzer</a></li>
-<li><a href="http://www.taydaelectronics.com/potentiometer-variable-resistors/trimmers/6mm-top-adjustment/10k-ohm-trimpot-variable-resistor-6mm.html">10&nbsp;KΩ trimpot</a></li>
-<li><a href="http://www.taydaelectronics.com/lcd-displays/lcd-display-16-x-2-blue-character-with-backlight.html">16x2 character LCD display with blue backlight</a></li>
-<li><a href="http://www.taydaelectronics.com/thermistors/10k-ohm-ntc-thermistor-5mm.html">NTC 10&nbsp;KΩ thermistor</a></li>
-<li><a href="http://www.taydaelectronics.com/ic-integrated-circuits/temperature-sensors/ds18b20-1-wire-digital-temperature-sensor-ic-dallas.html">DS18B20 digital temperature sensor</a></li>
-<li><a href="http://www.taydaelectronics.com/connectors-sockets/terminal-blocks/pcb-mount/dg301-screw-terminal-block-3-positions-5mm.html">screw terminal block 5mm pitch, 3 positions</a></li>
-<li><a href="http://www.taydaelectronics.com/connectors-sockets/terminal-blocks/pcb-mount/dg301-screw-terminal-block-2-positions-5mm.html">screw terminal block 5mm pitch, 2 positions</a></li>
+<li>10 x&nbsp;<a href="http://www.taydaelectronics.com/resistors/1-4w-carbon-film-resistors/10-x-resistor-4-7k-4k7-ohm-1-4w-5-carbon-film-pkg-of-10.html">4.7&nbsp;KΩ resistor 5%</a></li>
+<li>10 x&nbsp;<a href="http://www.taydaelectronics.com/10-x-0-1uf-50v-ceramic-disc-capacitor-pkg-of-10.html">0.1 uF ceramic capacitor</a></li>
+<li>1'&nbsp;<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-black-hook-up-wire-1ft-30cm-solid.html">black 22 AWG solid hook-up wire</a></li>
+<li>1'&nbsp;<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-red-hook-up-wire-1ft-30cm-solid.html">red 22 AWG solid hook-up wire</a></li>
+<li>1'&nbsp;<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-yellow-hook-up-wire-1ft-30cm-solid.html">yellow 22 AWG solid hook-up wire</a></li>
+<li>6'<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-red-hook-up-wire-1ft-30cm-stranded.html"> red 22 AWG stranded hook-up wire</a></li>
+<li>6'&nbsp;<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-black-hook-up-wire-1ft-30cm-stranded.html">black 22 AWG stranded hook-up wire</a></li>
+<li>3'&nbsp;<a href="http://www.taydaelectronics.com/hardware/cable-wire/awg-22-yellow-hook-up-wire-1ft-30cm-stranded.html">yellow 22 AWG stranded hook-up wire</a></li>
 </ul>
 </div>
 <br />
@@ -119,6 +148,7 @@ Materials</h3>
 Recommended Tools</h3>
 <br />
 <div>
+Soldering is much easier with a temperature controlled soldering station. For safety reasons,  I recommend using lead free solder.<br />
 <ul>
 <li><a href="http://amzn.to/166A8lK">Irwin self-adjusting wire stripper</a></li>
 <li><a href="http://amzn.to/19zMcQG">Hakko flush diagonal cutters</a></li>
@@ -134,6 +164,9 @@ Resources</h3>
 <br />
 <div>
 <ul>
-<li>The schematics, bill of materials, and other documentation can be found in the&nbsp;<a href="https://github.com/t0mpr1c3/Stripboard-PID-Arduino-Shield-Hardware">Github repository</a>.</li>
+<li><a href="https://github.com/t0mpr1c3/Stripboard-PID-Arduino-Shield-Hardware">Github repository</a>&nbsp;containing&nbsp;schematics, parts list, and other documentation</li>
+<li><a href="http://www.ospid.com/blog/resources/">osPID resources</a></li>
 </ul>
 </div>
+</body>
+</html>
